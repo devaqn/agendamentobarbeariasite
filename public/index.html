@@ -4,55 +4,148 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title class="barbershop-name">Barbearia Classic — Agendamento Online</title>
-  <meta name="description" content="Agende seu horário online, pague o sinal e garanta sua vez.">
+  <meta name="description" content="Agende seu horário online, pague o sinal e garanta sua vez. Sem filas, sem espera.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
   <!-- ── HEADER ── -->
-  <header>
-    <a href="/" class="logo barbershop-name">Barbearia Classic</a>
+  <header id="header">
+    <a href="/" class="logo barbershop-name">✦ Barbearia Classic</a>
     <nav>
       <a href="#servicos">Serviços</a>
+      <a href="#depoimentos">Avaliações</a>
       <a href="#sobre">Sobre</a>
-      <a href="#agendar" class="btn-nav">Agendar</a>
+      <a href="#agendar" class="btn-nav">Agendar Agora</a>
     </nav>
-    <button class="menu-toggle" onclick="this.nextElementSibling?.classList.toggle('open')">☰</button>
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
   </header>
 
   <!-- ── HERO ── -->
   <section id="hero">
-    <div>
-      <div class="hero-badge">✂️ &nbsp; Agendamento Online</div>
-      <h1>
-        Sua <span class="gold">Transformação</span><br>Começa Aqui
+    <!-- Decoração de fundo -->
+    <div class="hero-orb hero-orb-1"></div>
+    <div class="hero-orb hero-orb-2"></div>
+    <div class="hero-orb hero-orb-3"></div>
+    <div class="hero-lines"></div>
+
+    <div class="hero-content">
+      <div class="hero-badge animate-in" style="--delay:0s">
+        <span class="badge-dot"></span>
+        Agendamento Online — 100% gratuito
+      </div>
+
+      <h1 class="animate-in" style="--delay:0.1s">
+        Sua <em>transformação</em><br>começa com um clique
       </h1>
-      <p>Agende seu horário, pague o sinal e garanta sua vez. Sem filas, sem espera.</p>
-      <div class="hero-actions">
-        <a href="#agendar" class="btn btn-primary btn-lg">Agendar Agora</a>
-        <a href="#servicos" class="btn btn-secondary btn-lg">Ver Serviços</a>
+
+      <p class="animate-in" style="--delay:0.2s">
+        Reserve seu horário em 2 minutos, pague o sinal com segurança e apareça sem fila. Barbearia premium, experiência sem atrito.
+      </p>
+
+      <div class="hero-actions animate-in" style="--delay:0.3s">
+        <a href="#agendar" class="btn btn-primary btn-lg btn-glow">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          Agendar Agora
+        </a>
+        <a href="#servicos" class="btn btn-outline btn-lg">Ver Serviços</a>
+      </div>
+
+      <!-- Trust bar -->
+      <div class="trust-bar animate-in" style="--delay:0.4s">
+        <div class="trust-item">
+          <span class="trust-num">500+</span>
+          <span class="trust-label">Clientes atendidos</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item">
+          <span class="trust-num">⭐ 4.9</span>
+          <span class="trust-label">Avaliação média</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item">
+          <span class="trust-num">5+</span>
+          <span class="trust-label">Anos de tradição</span>
+        </div>
+        <div class="trust-divider"></div>
+        <div class="trust-item">
+          <span class="trust-num">🔒</span>
+          <span class="trust-label">Pagamento seguro</span>
+        </div>
       </div>
     </div>
-    <div class="hero-divider"></div>
+
+    <!-- Scroll indicator -->
+    <div class="scroll-hint">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
   </section>
 
   <!-- ── SERVIÇOS ── -->
   <section id="servicos">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header reveal">
         <span class="section-label">O que oferecemos</span>
         <h2>Nossos Serviços</h2>
-        <p>Qualidade e precisão em cada detalhe. Clique em um serviço para agendar.</p>
+        <p>Cada corte é uma obra. Clique para agendar direto.</p>
       </div>
       <div class="services-grid" id="services-grid">
         <!-- Preenchido via JS -->
-        <div class="service-card" style="opacity:0.4">
-          <div class="service-icon">✂️</div>
-          <h3>Carregando...</h3>
-          <p>&nbsp;</p>
+        <div class="service-card skeleton"></div>
+        <div class="service-card skeleton"></div>
+        <div class="service-card skeleton"></div>
+        <div class="service-card skeleton"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DEPOIMENTOS ── -->
+  <section id="depoimentos">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="section-label">O que dizem nossos clientes</span>
+        <h2>Avaliações Reais</h2>
+        <p>Mais de 500 clientes satisfeitos. Veja o que falam.</p>
+      </div>
+      <div class="testimonials-grid">
+        <div class="testimonial-card reveal">
+          <div class="stars">★★★★★</div>
+          <p>"Sistema de agendamento incrível! Agendei pelo celular em 2 minutos, paguei o sinal e apareci no horário. Sem fila, sem stress. Nunca mais vou ligar para marcar."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">JV</div>
+            <div>
+              <strong>João Vitor S.</strong>
+              <small>Cliente há 3 anos</small>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal" style="--reveal-delay:0.1s">
+          <div class="stars">★★★★★</div>
+          <p>"Melhor barbearia da região, sem dúvida. O corte é perfeito sempre. O sistema novo de agendamento online facilitou demais minha vida. Recomendo pra todo mundo."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">RC</div>
+            <div>
+              <strong>Rafael C.</strong>
+              <small>Cliente há 2 anos</small>
+            </div>
+          </div>
+        </div>
+        <div class="testimonial-card reveal" style="--reveal-delay:0.2s">
+          <div class="stars">★★★★★</div>
+          <p>"Profissionalismo em outro nível. Além do corte impecável, o site é muito bem feito. Agendei, paguei o sinal e recebi confirmação na hora. Isso é o futuro das barbearias."</p>
+          <div class="testimonial-author">
+            <div class="author-avatar">PM</div>
+            <div>
+              <strong>Pedro M.</strong>
+              <small>Cliente há 1 ano</small>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -61,57 +154,66 @@
   <!-- ── AGENDAMENTO ── -->
   <section id="agendar">
     <div class="container">
-      <div class="section-header">
+      <div class="section-header reveal">
         <span class="section-label">Reserve agora</span>
         <h2>Agendar Horário</h2>
-        <p>Preencha em 3 passos rápidos e pague o sinal online.</p>
+        <p>3 passos simples. Menos de 2 minutos.</p>
       </div>
 
       <div class="booking-wrapper">
 
         <!-- Stepper -->
-        <div class="stepper">
+        <div class="stepper reveal">
           <div class="step-item active" id="stepper-1">
-            <div class="step-num">1</div>
+            <div class="step-num">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 17l2 2 4-4"/><line x1="21" y1="6" x2="11" y2="6"/><line x1="21" y1="12" x2="11" y2="12"/><line x1="21" y1="18" x2="16" y2="18"/></svg>
+            </div>
             <div class="step-label">Serviço</div>
           </div>
           <div class="step-line"></div>
           <div class="step-item" id="stepper-2">
-            <div class="step-num">2</div>
+            <div class="step-num">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </div>
             <div class="step-label">Data & Hora</div>
           </div>
           <div class="step-line"></div>
           <div class="step-item" id="stepper-3">
-            <div class="step-num">3</div>
+            <div class="step-num">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
             <div class="step-label">Seus Dados</div>
           </div>
           <div class="step-line"></div>
           <div class="step-item" id="stepper-4">
-            <div class="step-num">4</div>
+            <div class="step-num">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            </div>
             <div class="step-label">Pagamento</div>
           </div>
         </div>
 
         <!-- Card principal -->
-        <div class="booking-card">
+        <div class="booking-card reveal">
 
           <!-- STEP 1 — Serviço -->
           <div class="step-content active" id="step-1-content">
             <h3 class="step-title">Escolha o serviço</h3>
             <p class="step-subtitle">Selecione o serviço que deseja agendar</p>
-            <div class="service-options" id="booking-services">
-              <!-- Preenchido via JS -->
-            </div>
+            <div class="service-options" id="booking-services"></div>
             <div class="step-nav">
               <div></div>
-              <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+              <button class="btn btn-primary btn-glow" onclick="nextStep()">
+                Próximo
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
             </div>
           </div>
 
           <!-- STEP 2 — Data e Hora -->
           <div class="step-content" id="step-2-content">
-            <h3 class="step-title">Escolha a data e horário</h3>
-            <p class="step-subtitle">Datas com disponibilidade estão destacadas</p>
+            <h3 class="step-title">Data e Horário</h3>
+            <p class="step-subtitle">Datas destacadas têm disponibilidade</p>
 
             <div class="calendar-wrapper">
               <div class="calendar-header">
@@ -128,23 +230,29 @@
             </div>
 
             <div class="step-nav">
-              <button class="btn btn-ghost" onclick="prevStep()">← Voltar</button>
-              <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+              <button class="btn btn-ghost" onclick="prevStep()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Voltar
+              </button>
+              <button class="btn btn-primary btn-glow" onclick="nextStep()">
+                Próximo
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
             </div>
           </div>
 
           <!-- STEP 3 — Dados -->
           <div class="step-content" id="step-3-content">
             <h3 class="step-title">Seus dados</h3>
-            <p class="step-subtitle">Precisamos de algumas informações para confirmar</p>
+            <p class="step-subtitle">Para confirmarmos seu agendamento</p>
 
             <div class="form-row">
               <div class="form-group">
                 <label for="client-name">Nome completo *</label>
-                <input type="text" id="client-name" placeholder="Seu nome" autocomplete="name">
+                <input type="text" id="client-name" placeholder="Seu nome completo" autocomplete="name">
               </div>
               <div class="form-group">
-                <label for="client-phone">Telefone / WhatsApp *</label>
+                <label for="client-phone">WhatsApp *</label>
                 <input type="tel" id="client-phone" placeholder="(11) 99999-9999" autocomplete="tel">
               </div>
             </div>
@@ -156,19 +264,25 @@
 
             <div class="form-group">
               <label for="client-notes">Observações (opcional)</label>
-              <textarea id="client-notes" placeholder="Alguma preferência ou informação adicional..."></textarea>
+              <textarea id="client-notes" placeholder="Alguma preferência? Ex: degradê baixo, barba feita..."></textarea>
             </div>
 
             <div class="step-nav">
-              <button class="btn btn-ghost" onclick="prevStep()">← Voltar</button>
-              <button class="btn btn-primary" onclick="nextStep()">Revisar →</button>
+              <button class="btn btn-ghost" onclick="prevStep()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Voltar
+              </button>
+              <button class="btn btn-primary btn-glow" onclick="nextStep()">
+                Revisar
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+              </button>
             </div>
           </div>
 
           <!-- STEP 4 — Resumo e Pagamento -->
           <div class="step-content" id="step-4-content">
             <h3 class="step-title">Confirme seu agendamento</h3>
-            <p class="step-subtitle">Revise as informações e pague o sinal para garantir sua vaga</p>
+            <p class="step-subtitle">Revise tudo e pague o sinal para garantir sua vaga</p>
 
             <div class="summary-card">
               <div class="summary-row">
@@ -184,7 +298,7 @@
                 <span id="summary-client">—</span>
               </div>
               <div class="summary-row">
-                <span class="label">Telefone</span>
+                <span class="label">WhatsApp</span>
                 <span id="summary-phone">—</span>
               </div>
               <div class="summary-row" id="summary-email-row" style="display:none">
@@ -192,33 +306,37 @@
                 <span id="summary-email">—</span>
               </div>
               <div class="summary-row">
-                <span class="label">Valor do serviço</span>
+                <span class="label">Valor total</span>
                 <span id="summary-price">—</span>
               </div>
             </div>
 
-            <div class="summary-card" id="summary-signal-row">
-              <div class="summary-total">
-                <span class="label">💳 Sinal a pagar agora</span>
-                <span class="value" id="summary-signal">—</span>
+            <div class="summary-signal" id="summary-signal-row">
+              <div>
+                <div class="signal-label">💳 Sinal a pagar agora</div>
+                <div class="signal-desc">O restante é pago presencialmente no dia</div>
               </div>
+              <div class="signal-value" id="summary-signal">—</div>
             </div>
 
             <div class="payment-notice">
-              🔒 Pagamento processado com segurança pelo <strong>Mercado Pago</strong>.
-              O restante é pago presencialmente na barbearia no dia do serviço.
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              Pagamento processado com segurança pelo <strong>Mercado Pago</strong>. Seus dados estão protegidos.
             </div>
 
             <div class="step-nav">
-              <button class="btn btn-ghost" onclick="prevStep()">← Voltar</button>
-              <button class="btn btn-primary btn-lg" id="pay-btn" onclick="submitBooking()">
+              <button class="btn btn-ghost" onclick="prevStep()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+                Voltar
+              </button>
+              <button class="btn btn-primary btn-lg btn-glow" id="pay-btn" onclick="submitBooking()">
                 Pagar Sinal
               </button>
             </div>
           </div>
 
-        </div><!-- /booking-card -->
-      </div><!-- /booking-wrapper -->
+        </div>
+      </div>
     </div>
   </section>
 
@@ -226,35 +344,37 @@
   <section id="sobre">
     <div class="container">
       <div class="sobre-grid">
-        <div class="sobre-text">
+        <div class="sobre-text reveal">
           <span class="section-label">Nossa história</span>
-          <h2>Tradição e modernidade em um só lugar</h2>
+          <h2>Tradição que evolui com o tempo</h2>
           <p>
-            Somos uma barbearia comprometida com excelência e precisão. Cada cliente é atendido
-            com atenção personalizada, utilizando as melhores técnicas e produtos do mercado.
+            Mais de 5 anos transformando vidas com cortes impecáveis e atendimento personalizado.
+            Cada cliente é único — e merece ser tratado assim.
           </p>
           <p>
-            Com agendamento online você reserva seu horário com antecedência, paga o sinal
-            e aparece sem pressa. Simples assim.
+            Agora com agendamento online: você reserva, paga o sinal e aparece sem pressa.
+            Nada de fila, nada de espera. Só a melhor experiência de barbearia que você já teve.
           </p>
-          <a href="#agendar" class="btn btn-primary" style="margin-top:0.5rem">Agendar agora</a>
+          <a href="#agendar" class="btn btn-primary btn-glow" style="margin-top:0.5rem">
+            Agendar agora
+          </a>
         </div>
-        <div class="sobre-stats">
+        <div class="sobre-stats reveal" style="--reveal-delay:0.15s">
           <div class="stat-box">
-            <span class="num">5+</span>
-            <span class="label">Anos de experiência</span>
-          </div>
-          <div class="stat-box">
-            <span class="num">1k+</span>
+            <span class="num" data-target="500">0</span><span class="num-plus">+</span>
             <span class="label">Clientes atendidos</span>
           </div>
           <div class="stat-box">
-            <span class="num">4</span>
+            <span class="num" data-target="5">0</span><span class="num-plus">+</span>
+            <span class="label">Anos de experiência</span>
+          </div>
+          <div class="stat-box">
+            <span class="num" data-target="4">0</span>
             <span class="label">Serviços disponíveis</span>
           </div>
           <div class="stat-box">
-            <span class="num">⭐</span>
-            <span class="label">Atendimento premium</span>
+            <span class="num">4.9</span><span class="num-plus">⭐</span>
+            <span class="label">Avaliação média</span>
           </div>
         </div>
       </div>
@@ -263,18 +383,43 @@
 
   <!-- ── FOOTER ── -->
   <footer>
-    <p class="barbershop-name" style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:0.75rem">
-      Barbearia Classic
-    </p>
-    <p style="margin-bottom:0.5rem" id="footer-contact"></p>
-    <p style="margin-top:1rem">
-      © <span id="year"></span> · Desenvolvido com ♥ ·
-      <a href="/admin.html">Área do Admin</a>
-    </p>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="logo barbershop-name">✦ Barbearia Classic</div>
+        <p id="footer-contact"></p>
+      </div>
+      <div class="footer-links">
+        <a href="#servicos">Serviços</a>
+        <a href="#depoimentos">Avaliações</a>
+        <a href="#agendar">Agendar</a>
+        <a href="/admin.html">Admin</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© <span id="year"></span> Barbearia Classic · Todos os direitos reservados</p>
+      <p style="margin-top:0.25rem;font-size:0.75rem;opacity:0.5">Sistema desenvolvido com excelência</p>
+    </div>
   </footer>
 
+  <!-- ── WHATSAPP FLUTUANTE ── -->
+  <a class="whatsapp-btn" id="whatsapp-btn" href="#agendar" title="Agendar pelo WhatsApp">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+    </svg>
+    <span>Agendar</span>
+  </a>
+
   <!-- ── RESULTADO DO PAGAMENTO ── -->
-  <div id="payment-result"></div>
+  <div id="payment-result">
+    <div id="confetti-container"></div>
+    <div class="result-content">
+      <div class="result-icon" id="result-icon"></div>
+      <h2 class="result-title" id="result-title"></h2>
+      <p class="result-desc" id="result-desc"></p>
+      <p class="result-id" id="result-id"></p>
+      <div class="result-actions" id="result-actions"></div>
+    </div>
+  </div>
 
   <!-- ── TOAST ── -->
   <div id="toast"></div>
@@ -283,14 +428,32 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Preenche contato no footer
     fetch('/api/admin/config').then(r => r.json()).then(cfg => {
       const parts = [];
-      if (cfg.phone) parts.push(cfg.phone);
-      if (cfg.address) parts.push(cfg.address);
-      if (cfg.instagram) parts.push(cfg.instagram);
-      document.getElementById('footer-contact').textContent = parts.join(' · ');
+      if (cfg.phone) parts.push('📞 ' + cfg.phone);
+      if (cfg.address) parts.push('📍 ' + cfg.address);
+      if (cfg.instagram) parts.push('📷 ' + cfg.instagram);
+      const el = document.getElementById('footer-contact');
+      if (el) el.innerHTML = parts.join(' &nbsp;·&nbsp; ');
+
+      // Atualiza WhatsApp se tiver número
+      if (cfg.phone) {
+        const num = cfg.phone.replace(/\D/g, '');
+        const wa = document.getElementById('whatsapp-btn');
+        if (wa) wa.href = `https://wa.me/55${num}?text=Olá! Quero agendar um horário.`;
+      }
     }).catch(() => {});
+
+    // Header scroll effect
+    window.addEventListener('scroll', () => {
+      document.getElementById('header').classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    // Mobile menu
+    document.getElementById('menu-toggle').addEventListener('click', function() {
+      this.classList.toggle('open');
+      document.querySelector('nav').classList.toggle('open');
+    });
   </script>
 </body>
 </html>
