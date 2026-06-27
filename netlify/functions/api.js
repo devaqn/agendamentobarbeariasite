@@ -14,10 +14,10 @@ const CONFIG = {
 };
 
 const SERVICES = [
-  { id: 1, name: 'Corte de Cabelo', description: 'Corte moderno e estiloso com acabamento perfeito', duration_minutes: 45, price: 50.00, signal_percentage: 50, active: true },
-  { id: 2, name: 'Barba', description: 'Aparação, modelagem e hidratação da barba', duration_minutes: 30, price: 35.00, signal_percentage: 50, active: true },
-  { id: 3, name: 'Corte + Barba', description: 'Combo completo: corte de cabelo e tratamento de barba', duration_minutes: 70, price: 75.00, signal_percentage: 50, active: true },
-  { id: 4, name: 'Sobrancelha', description: 'Design e alinhamento de sobrancelha masculina', duration_minutes: 20, price: 20.00, signal_percentage: 0, active: true }
+  { id: 1, name: 'Corte de Cabelo', description: 'Tesoura, máquina, acabamento no capricho. Do social ao degradê.', duration_minutes: 45, price: 50.00, signal_percentage: 50, active: true },
+  { id: 2, name: 'Barba', description: 'Toalha quente, navalha e produto. Barba alinhada do jeito que você quer.', duration_minutes: 30, price: 35.00, signal_percentage: 50, active: true },
+  { id: 3, name: 'Corte + Barba', description: 'Os dois juntos, sem correria. Sai daqui pronto pra qualquer ocasião.', duration_minutes: 70, price: 75.00, signal_percentage: 50, active: true },
+  { id: 4, name: 'Sobrancelha', description: 'Alinhamento rápido com pinça ou gilete. Faz diferença no visual.', duration_minutes: 20, price: 20.00, signal_percentage: 0, active: true }
 ];
 
 // ── Helpers ───────────────────────────────────────────────────
