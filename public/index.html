@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title class="barbershop-name">Barbearia Classic — Agendamento Online</title>
+  <meta name="description" content="Agende seu horário online, pague o sinal e garanta sua vez.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ── HEADER ── -->
+  <header>
+    <a href="/" class="logo barbershop-name">Barbearia Classic</a>
+    <nav>
+      <a href="#servicos">Serviços</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#agendar" class="btn-nav">Agendar</a>
+    </nav>
+    <button class="menu-toggle" onclick="this.nextElementSibling?.classList.toggle('open')">☰</button>
+  </header>
+
+  <!-- ── HERO ── -->
+  <section id="hero">
+    <div>
+      <div class="hero-badge">✂️ &nbsp; Agendamento Online</div>
+      <h1>
+        Sua <span class="gold">Transformação</span><br>Começa Aqui
+      </h1>
+      <p>Agende seu horário, pague o sinal e garanta sua vez. Sem filas, sem espera.</p>
+      <div class="hero-actions">
+        <a href="#agendar" class="btn btn-primary btn-lg">Agendar Agora</a>
+        <a href="#servicos" class="btn btn-secondary btn-lg">Ver Serviços</a>
+      </div>
+    </div>
+    <div class="hero-divider"></div>
+  </section>
+
+  <!-- ── SERVIÇOS ── -->
+  <section id="servicos">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">O que oferecemos</span>
+        <h2>Nossos Serviços</h2>
+        <p>Qualidade e precisão em cada detalhe. Clique em um serviço para agendar.</p>
+      </div>
+      <div class="services-grid" id="services-grid">
+        <!-- Preenchido via JS -->
+        <div class="service-card" style="opacity:0.4">
+          <div class="service-icon">✂️</div>
+          <h3>Carregando...</h3>
+          <p>&nbsp;</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── AGENDAMENTO ── -->
+  <section id="agendar">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-label">Reserve agora</span>
+        <h2>Agendar Horário</h2>
+        <p>Preencha em 3 passos rápidos e pague o sinal online.</p>
+      </div>
+
+      <div class="booking-wrapper">
+
+        <!-- Stepper -->
+        <div class="stepper">
+          <div class="step-item active" id="stepper-1">
+            <div class="step-num">1</div>
+            <div class="step-label">Serviço</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item" id="stepper-2">
+            <div class="step-num">2</div>
+            <div class="step-label">Data & Hora</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item" id="stepper-3">
+            <div class="step-num">3</div>
+            <div class="step-label">Seus Dados</div>
+          </div>
+          <div class="step-line"></div>
+          <div class="step-item" id="stepper-4">
+            <div class="step-num">4</div>
+            <div class="step-label">Pagamento</div>
+          </div>
+        </div>
+
+        <!-- Card principal -->
+        <div class="booking-card">
+
+          <!-- STEP 1 — Serviço -->
+          <div class="step-content active" id="step-1-content">
+            <h3 class="step-title">Escolha o serviço</h3>
+            <p class="step-subtitle">Selecione o serviço que deseja agendar</p>
+            <div class="service-options" id="booking-services">
+              <!-- Preenchido via JS -->
+            </div>
+            <div class="step-nav">
+              <div></div>
+              <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+            </div>
+          </div>
+
+          <!-- STEP 2 — Data e Hora -->
+          <div class="step-content" id="step-2-content">
+            <h3 class="step-title">Escolha a data e horário</h3>
+            <p class="step-subtitle">Datas com disponibilidade estão destacadas</p>
+
+            <div class="calendar-wrapper">
+              <div class="calendar-header">
+                <button class="cal-nav" onclick="calNav(-1)">‹</button>
+                <span class="calendar-title" id="cal-title"></span>
+                <button class="cal-nav" onclick="calNav(1)">›</button>
+              </div>
+              <div class="calendar-grid" id="cal-grid"></div>
+            </div>
+
+            <p class="slots-label" id="slots-label">Selecione uma data para ver os horários</p>
+            <div id="slots-container">
+              <p class="slots-empty">Selecione uma data no calendário acima</p>
+            </div>
+
+            <div class="step-nav">
+              <button class="btn btn-ghost" onclick="prevStep()">← Voltar</button>
+              <button class="btn btn-primary" onclick="nextStep()">Próximo →</button>
+            </div>
+          </div>
+
+          <!-- STEP 3 — Dados -->
+          <div class="step-content" id="step-3-content">
+            <h3 class="step-title">Seus dados</h3>
+            <p class="step-subtitle">Precisamos de algumas informações para confirmar</p>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="client-name">Nome completo *</label>
+                <input type="text" id="client-name" placeholder="Seu nome" autocomplete="name">
+              </div>
+              <div class="form-group">
+                <label for="client-phone">Telefone / WhatsApp *</label>
+                <input type="tel" id="client-phone" placeholder="(11) 99999-9999" autocomplete="tel">
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="client-email">E-mail (opcional)</label>
+              <input type="email" id="client-email" placeholder="seu@email.com" autocomplete="email">
+            </div>
+
+            <div class="form-group">
+              <label for="client-notes">Observações (opcional)</label>
+              <textarea id="client-notes" placeholder="Alguma preferência ou informação adicional..."></textarea>
+            </div>
+
+            <div class="step-nav">
+              <button class="btn btn-ghost" onclick="prevStep()">← Voltar</button>
+              <button class="btn btn-primary" onclick="nextStep()">Revisar →</button>
+            </div>
+          </div>
+
+          <!-- STEP 4 — Resumo e Pagamento -->
+          <div class="step-content" id="step-4-content">
+            <h3 class="step-title">Confirme seu agendamento</h3>
+            <p class="step-subtitle">Revise as informações e pague o sinal para garantir sua vaga</p>
+
+            <div class="summary-card">
+              <div class="summary-row">
+                <span class="label">Serviço</span>
+                <span id="summary-service">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Data e hora</span>
+                <span id="summary-datetime">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Nome</span>
+                <span id="summary-client">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Telefone</span>
+                <span id="summary-phone">—</span>
+              </div>
+              <div class="summary-row" id="summary-email-row" style="display:none">
+                <span class="label">E-mail</span>
+                <span id="summary-email">—</span>
+              </div>
+              <div class="summary-row">
+                <span class="label">Valor do serviço</span>
+                <span id="summary-price">—</span>
+              </div>
+            </div>
+
+            <div class="summary-card" id="summary-signal-row">
+              <div class="summary-total">
+                <span class="label">💳 Sinal a pagar agora</span>
+                <span class="value" id="summary-signal">—</span>
+              </div>
+            </div>
+
+            <div class="payment-notice">
+              🔒 Pagamento processado com segurança pelo <strong>Mercado Pago</strong>.
+              O restante é pago presencialmente na barbearia no dia do serviço.
+            </div>
+
+            <div class="step-nav">
+              <button class="btn btn-ghost" onclick="prevStep()">← Voltar</button>
+              <button class="btn btn-primary btn-lg" id="pay-btn" onclick="submitBooking()">
+                Pagar Sinal
+              </button>
+            </div>
+          </div>
+
+        </div><!-- /booking-card -->
+      </div><!-- /booking-wrapper -->
+    </div>
+  </section>
+
+  <!-- ── SOBRE ── -->
+  <section id="sobre">
+    <div class="container">
+      <div class="sobre-grid">
+        <div class="sobre-text">
+          <span class="section-label">Nossa história</span>
+          <h2>Tradição e modernidade em um só lugar</h2>
+          <p>
+            Somos uma barbearia comprometida com excelência e precisão. Cada cliente é atendido
+            com atenção personalizada, utilizando as melhores técnicas e produtos do mercado.
+          </p>
+          <p>
+            Com agendamento online você reserva seu horário com antecedência, paga o sinal
+            e aparece sem pressa. Simples assim.
+          </p>
+          <a href="#agendar" class="btn btn-primary" style="margin-top:0.5rem">Agendar agora</a>
+        </div>
+        <div class="sobre-stats">
+          <div class="stat-box">
+            <span class="num">5+</span>
+            <span class="label">Anos de experiência</span>
+          </div>
+          <div class="stat-box">
+            <span class="num">1k+</span>
+            <span class="label">Clientes atendidos</span>
+          </div>
+          <div class="stat-box">
+            <span class="num">4</span>
+            <span class="label">Serviços disponíveis</span>
+          </div>
+          <div class="stat-box">
+            <span class="num">⭐</span>
+            <span class="label">Atendimento premium</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer>
+    <p class="barbershop-name" style="font-family:'Playfair Display',serif;font-size:1.1rem;color:var(--gold);margin-bottom:0.75rem">
+      Barbearia Classic
+    </p>
+    <p style="margin-bottom:0.5rem" id="footer-contact"></p>
+    <p style="margin-top:1rem">
+      © <span id="year"></span> · Desenvolvido com ♥ ·
+      <a href="/admin.html">Área do Admin</a>
+    </p>
+  </footer>
+
+  <!-- ── RESULTADO DO PAGAMENTO ── -->
+  <div id="payment-result"></div>
+
+  <!-- ── TOAST ── -->
+  <div id="toast"></div>
+
+  <script src="/js/app.js"></script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Preenche contato no footer
+    fetch('/api/admin/config').then(r => r.json()).then(cfg => {
+      const parts = [];
+      if (cfg.phone) parts.push(cfg.phone);
+      if (cfg.address) parts.push(cfg.address);
+      if (cfg.instagram) parts.push(cfg.instagram);
+      document.getElementById('footer-contact').textContent = parts.join(' · ');
+    }).catch(() => {});
+  </script>
+</body>
+</html>

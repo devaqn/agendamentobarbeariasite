@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin — Barbearia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- ══════════════════════════════
+       LOGIN
+  ═══════════════════════════════════ -->
+  <div id="login-screen">
+    <div class="login-card">
+      <div class="login-logo">
+        <div class="logo">✂ Barbearia</div>
+        <p>Área administrativa</p>
+      </div>
+
+      <div class="admin-form-group">
+        <label>E-mail</label>
+        <input class="admin-input" type="email" id="login-email" placeholder="admin@barbearia.com" autocomplete="username">
+      </div>
+      <div class="admin-form-group">
+        <label>Senha</label>
+        <input class="admin-input" type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+      </div>
+
+      <div id="login-error" style="display:none;color:var(--error);font-size:0.85rem;margin-bottom:1rem;padding:0.75rem;background:rgba(239,68,68,0.1);border-radius:8px;border:1px solid rgba(239,68,68,0.2)"></div>
+
+      <button class="btn btn-primary btn-full" id="login-btn" onclick="login()">Entrar</button>
+
+      <p style="text-align:center;margin-top:1.5rem;font-size:0.82rem;color:var(--text-muted)">
+        <a href="/" style="color:var(--gold);text-decoration:none">← Voltar ao site</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════
+       ADMIN APP
+  ═══════════════════════════════════ -->
+  <div id="admin-app" style="display:none">
+
+    <!-- Sidebar toggle (mobile) -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">☰</button>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <div class="logo">✂ Barbearia</div>
+        <p>Painel Admin</p>
+      </div>
+
+      <nav class="sidebar-nav">
+        <button class="nav-item active" data-view="dashboard" onclick="loadView('dashboard')">
+          <span class="nav-icon">📊</span> Dashboard
+        </button>
+        <button class="nav-item" data-view="appointments" onclick="loadView('appointments')">
+          <span class="nav-icon">📅</span> Agendamentos
+        </button>
+        <button class="nav-item" data-view="slots" onclick="loadView('slots')">
+          <span class="nav-icon">🕐</span> Horários
+        </button>
+        <button class="nav-item" data-view="services" onclick="loadView('services')">
+          <span class="nav-icon">✂️</span> Serviços
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="admin-info">
+          <div class="admin-avatar" id="admin-avatar">A</div>
+          <div>
+            <div class="admin-name" id="admin-name">Admin</div>
+            <div class="admin-email" id="admin-email-display"></div>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-sm btn-full" onclick="logout()">Sair</button>
+      </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="admin-main">
+
+      <!-- ─── DASHBOARD ─── -->
+      <div class="view" id="view-dashboard">
+        <div class="admin-header">
+          <h1 class="admin-title">Dashboard</h1>
+          <button class="btn btn-ghost btn-sm" onclick="loadDashboard()">↻ Atualizar</button>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-card-label">Agendamentos hoje</div>
+            <div class="stat-card-value" id="stat-today">—</div>
+            <div class="stat-card-sub">confirmados e pendentes</div>
+          </div>
+          <div class="stat-card gold">
+            <div class="stat-card-label">Receita total (sinais)</div>
+            <div class="stat-card-value" id="stat-revenue">—</div>
+            <div class="stat-card-sub">pagamentos confirmados</div>
+          </div>
+          <div class="stat-card orange">
+            <div class="stat-card-label">Pagamentos pendentes</div>
+            <div class="stat-card-value" id="stat-pending">—</div>
+            <div class="stat-card-sub">últimas 48 horas</div>
+          </div>
+        </div>
+
+        <div class="table-wrapper">
+          <div class="table-header">
+            <span class="table-title">📍 Próximos agendamentos</span>
+            <button class="btn btn-sm btn-ghost" onclick="loadView('appointments')">Ver todos →</button>
+          </div>
+          <div style="padding:1.25rem" id="upcoming-list">
+            <p style="color:var(--text-muted);text-align:center">Carregando...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── AGENDAMENTOS ─── -->
+      <div class="view" id="view-appointments" style="display:none">
+        <div class="admin-header">
+          <h1 class="admin-title">Agendamentos</h1>
+        </div>
+
+        <div class="admin-section" style="display:flex;gap:1rem;align-items:flex-end;flex-wrap:wrap">
+          <div class="admin-form-group" style="flex:1;min-width:160px;margin:0">
+            <label>Filtrar por data</label>
+            <input class="admin-input" type="date" id="filter-date" onchange="loadAppointments()">
+          </div>
+          <div class="admin-form-group" style="flex:1;min-width:140px;margin:0">
+            <label>Status</label>
+            <select class="admin-input" id="filter-status" onchange="loadAppointments()">
+              <option value="">Todos</option>
+              <option value="pending">Pendente</option>
+              <option value="confirmed">Confirmado</option>
+              <option value="completed">Concluído</option>
+              <option value="cancelled">Cancelado</option>
+            </select>
+          </div>
+          <button class="btn btn-ghost" onclick="document.getElementById('filter-date').value='';document.getElementById('filter-status').value='';loadAppointments()">Limpar</button>
+          <button class="btn btn-primary" onclick="loadAppointments()">Buscar</button>
+        </div>
+
+        <div class="table-wrapper">
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Cliente</th>
+                  <th>Serviço</th>
+                  <th>Data / Hora</th>
+                  <th>Status</th>
+                  <th>Pagamento</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+              <tbody id="appointments-tbody">
+                <tr><td colspan="7" style="text-align:center;color:var(--text-muted);padding:2rem">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── HORÁRIOS ─── -->
+      <div class="view" id="view-slots" style="display:none">
+        <div class="admin-header">
+          <h1 class="admin-title">Gerenciar Horários</h1>
+        </div>
+
+        <!-- Adicionar horários -->
+        <div class="admin-section">
+          <div class="admin-section-title">➕ Adicionar horários disponíveis</div>
+
+          <div class="admin-form-group">
+            <label>Data</label>
+            <input class="admin-input" type="date" id="new-slot-date" style="max-width:220px">
+          </div>
+
+          <div class="admin-form-group">
+            <label>Horários (selecione os que deseja abrir)</label>
+            <div class="time-grid">
+              <!-- Manhã -->
+              <label><input class="time-check" type="checkbox" value="08:00"><span class="time-label">08:00</span></label>
+              <label><input class="time-check" type="checkbox" value="08:30"><span class="time-label">08:30</span></label>
+              <label><input class="time-check" type="checkbox" value="09:00"><span class="time-label">09:00</span></label>
+              <label><input class="time-check" type="checkbox" value="09:30"><span class="time-label">09:30</span></label>
+              <label><input class="time-check" type="checkbox" value="10:00"><span class="time-label">10:00</span></label>
+              <label><input class="time-check" type="checkbox" value="10:30"><span class="time-label">10:30</span></label>
+              <label><input class="time-check" type="checkbox" value="11:00"><span class="time-label">11:00</span></label>
+              <label><input class="time-check" type="checkbox" value="11:30"><span class="time-label">11:30</span></label>
+              <!-- Tarde -->
+              <label><input class="time-check" type="checkbox" value="13:00"><span class="time-label">13:00</span></label>
+              <label><input class="time-check" type="checkbox" value="13:30"><span class="time-label">13:30</span></label>
+              <label><input class="time-check" type="checkbox" value="14:00"><span class="time-label">14:00</span></label>
+              <label><input class="time-check" type="checkbox" value="14:30"><span class="time-label">14:30</span></label>
+              <label><input class="time-check" type="checkbox" value="15:00"><span class="time-label">15:00</span></label>
+              <label><input class="time-check" type="checkbox" value="15:30"><span class="time-label">15:30</span></label>
+              <label><input class="time-check" type="checkbox" value="16:00"><span class="time-label">16:00</span></label>
+              <label><input class="time-check" type="checkbox" value="16:30"><span class="time-label">16:30</span></label>
+              <!-- Noite -->
+              <label><input class="time-check" type="checkbox" value="17:00"><span class="time-label">17:00</span></label>
+              <label><input class="time-check" type="checkbox" value="17:30"><span class="time-label">17:30</span></label>
+              <label><input class="time-check" type="checkbox" value="18:00"><span class="time-label">18:00</span></label>
+              <label><input class="time-check" type="checkbox" value="18:30"><span class="time-label">18:30</span></label>
+              <label><input class="time-check" type="checkbox" value="19:00"><span class="time-label">19:00</span></label>
+              <label><input class="time-check" type="checkbox" value="19:30"><span class="time-label">19:30</span></label>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:0.75rem;margin-top:0.5rem">
+            <button class="btn btn-primary" onclick="addSlots()">Adicionar Horários Selecionados</button>
+            <button class="btn btn-ghost btn-sm" onclick="document.querySelectorAll('.time-check').forEach(c=>c.checked=true)">Selecionar todos</button>
+            <button class="btn btn-ghost btn-sm" onclick="document.querySelectorAll('.time-check').forEach(c=>c.checked=false)">Limpar</button>
+          </div>
+        </div>
+
+        <!-- Lista de horários -->
+        <div class="table-wrapper">
+          <div class="table-header">
+            <span class="table-title">📋 Horários futuros</span>
+            <div style="display:flex;gap:0.5rem;align-items:center">
+              <input class="admin-input" type="date" id="slots-filter-date" style="max-width:180px" onchange="loadSlotsView()">
+              <button class="btn btn-sm btn-ghost" onclick="document.getElementById('slots-filter-date').value='';loadSlotsView()">Todos</button>
+            </div>
+          </div>
+          <div style="overflow-x:auto">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Hora</th>
+                  <th>Status</th>
+                  <th>Ação</th>
+                </tr>
+              </thead>
+              <tbody id="slots-tbody">
+                <tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem">Carregando...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── SERVIÇOS ─── -->
+      <div class="view" id="view-services" style="display:none">
+        <div class="admin-header">
+          <h1 class="admin-title">Serviços</h1>
+        </div>
+
+        <!-- Editar serviço (painel hidden) -->
+        <div class="admin-section" id="edit-service-panel" style="display:none;border:1px solid var(--gold)">
+          <div class="admin-section-title" style="color:var(--gold)">✎ Editar Serviço</div>
+          <input type="hidden" id="edit-service-id">
+          <div class="form-row">
+            <div class="admin-form-group">
+              <label>Nome</label>
+              <input class="admin-input" id="edit-service-name">
+            </div>
+            <div class="admin-form-group">
+              <label>Preço (R$)</label>
+              <input class="admin-input" type="number" step="0.01" id="edit-service-price">
+            </div>
+          </div>
+          <div class="admin-form-group">
+            <label>Descrição</label>
+            <input class="admin-input" id="edit-service-desc">
+          </div>
+          <div class="form-row">
+            <div class="admin-form-group">
+              <label>Duração (min)</label>
+              <input class="admin-input" type="number" id="edit-service-duration">
+            </div>
+            <div class="admin-form-group">
+              <label>% do sinal (0 = sem sinal)</label>
+              <input class="admin-input" type="number" min="0" max="100" id="edit-service-signal">
+            </div>
+          </div>
+          <div style="display:flex;gap:0.75rem">
+            <button class="btn btn-primary" onclick="saveService()">Salvar</button>
+            <button class="btn btn-ghost" onclick="cancelEdit()">Cancelar</button>
+          </div>
+        </div>
+
+        <!-- Lista de serviços -->
+        <div class="admin-section">
+          <div class="admin-section-title">Serviços cadastrados</div>
+          <div id="services-admin-list" class="upcoming-list">
+            <p style="color:var(--text-muted);text-align:center">Carregando...</p>
+          </div>
+        </div>
+
+        <!-- Novo serviço -->
+        <div class="admin-section">
+          <div class="admin-section-title">➕ Adicionar novo serviço</div>
+          <div class="form-row">
+            <div class="admin-form-group">
+              <label>Nome *</label>
+              <input class="admin-input" id="new-service-name" placeholder="Ex: Corte Degradê">
+            </div>
+            <div class="admin-form-group">
+              <label>Preço (R$) *</label>
+              <input class="admin-input" type="number" step="0.01" id="new-service-price" placeholder="0.00">
+            </div>
+          </div>
+          <div class="admin-form-group">
+            <label>Descrição</label>
+            <input class="admin-input" id="new-service-desc" placeholder="Breve descrição...">
+          </div>
+          <div class="form-row">
+            <div class="admin-form-group">
+              <label>Duração (min)</label>
+              <input class="admin-input" type="number" id="new-service-duration" placeholder="45">
+            </div>
+            <div class="admin-form-group">
+              <label>% do sinal (0 = sem sinal)</label>
+              <input class="admin-input" type="number" min="0" max="100" id="new-service-signal" placeholder="30">
+            </div>
+          </div>
+          <button class="btn btn-primary" onclick="saveNewService()">Criar Serviço</button>
+        </div>
+      </div>
+
+    </main><!-- /admin-main -->
+  </div><!-- /admin-app -->
+
+  <div id="toast"></div>
+
+  <script src="/js/admin.js"></script>
+</body>
+</html>

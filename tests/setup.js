@@ -1,0 +1,10 @@
+process.env.NODE_ENV = 'test';
+process.env.JWT_SECRET = 'test-jwt-secret-key-for-testing-only';
+process.env.MP_ACCESS_TOKEN = 'TEST-access-token-not-real';
+process.env.MP_PUBLIC_KEY = 'TEST-public-key-not-real';
+process.env.FRONTEND_URL = 'http://localhost:3000';
+process.env.BACKEND_URL = 'http://localhost:3000';
+process.env.BARBERSHOP_NAME = 'Barbearia Teste';
+process.env.BARBERSHOP_PHONE = '(11) 99999-9999';
+process.env.BARBERSHOP_ADDRESS = 'Rua Teste, 123';
+process.env.BARBERSHOP_INSTAGRAM = '@barbearia_teste';
