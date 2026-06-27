@@ -126,33 +126,117 @@ function auth(req, res, next) {
   res.status(401).json({ error: 'Token não fornecido' });
 }
 
+// ── Mock de agendamentos ──────────────────────────────────────
+function mockAppointments() {
+  const now = new Date();
+  const d = (h, m, daysAhead) => {
+    const dt = new Date(now);
+    dt.setDate(dt.getDate() + daysAhead);
+    dt.setHours(h, m, 0, 0);
+    return dt.toISOString();
+  };
+  return [
+    { id: 1001, client_name: 'Lucas Ferreira',  client_phone: '(11) 98765-4321', service_id: 1, service_name: 'Corte de Cabelo', service_price: 50, slot_datetime: d(9,  0, 0), status: 'confirmed',  payment_status: 'paid',    signal_amount: 25.00 },
+    { id: 1002, client_name: 'Marcos Almeida',  client_phone: '(11) 91234-5678', service_id: 3, service_name: 'Corte + Barba',  service_price: 75, slot_datetime: d(10, 0, 0), status: 'confirmed',  payment_status: 'paid',    signal_amount: 37.50 },
+    { id: 1003, client_name: 'Thiago Ramos',    client_phone: '(11) 99999-1234', service_id: 2, service_name: 'Barba',           service_price: 35, slot_datetime: d(11, 0, 0), status: 'pending',    payment_status: 'pending', signal_amount: 17.50 },
+    { id: 1004, client_name: 'Rafael Costa',    client_phone: '(11) 97777-8888', service_id: 1, service_name: 'Corte de Cabelo', service_price: 50, slot_datetime: d(14, 0, 0), status: 'pending',    payment_status: 'pending', signal_amount: 25.00 },
+    { id: 1005, client_name: 'Bruno Mendes',    client_phone: '(11) 96666-3333', service_id: 4, service_name: 'Sobrancelha',     service_price: 20, slot_datetime: d(15, 0, 0), status: 'confirmed',  payment_status: 'paid',    signal_amount: 0     },
+    { id: 1006, client_name: 'Gabriel Lima',    client_phone: '(11) 95555-2222', service_id: 3, service_name: 'Corte + Barba',  service_price: 75, slot_datetime: d(9,  0, 1), status: 'confirmed',  payment_status: 'paid',    signal_amount: 37.50 },
+    { id: 1007, client_name: 'Pedro Oliveira',  client_phone: '(11) 94444-1111', service_id: 1, service_name: 'Corte de Cabelo', service_price: 50, slot_datetime: d(10,30, 1), status: 'confirmed',  payment_status: 'paid',    signal_amount: 25.00 },
+    { id: 1008, client_name: 'Diego Santos',    client_phone: '(11) 93333-9999', service_id: 2, service_name: 'Barba',           service_price: 35, slot_datetime: d(14, 0, 2), status: 'pending',    payment_status: 'pending', signal_amount: 17.50 },
+    { id: 1009, client_name: 'Fernando Rocha',  client_phone: '(11) 92222-7777', service_id: 1, service_name: 'Corte de Cabelo', service_price: 50, slot_datetime: d(9,  0,-1), status: 'completed',  payment_status: 'paid',    signal_amount: 25.00 },
+    { id: 1010, client_name: 'André Carvalho',  client_phone: '(11) 91111-6666', service_id: 3, service_name: 'Corte + Barba',  service_price: 75, slot_datetime: d(11, 0,-1), status: 'cancelled',  payment_status: 'pending', signal_amount: 37.50 },
+  ];
+}
+
+// ── Mock de slots ─────────────────────────────────────────────
+function mockSlots() {
+  const now = new Date();
+  const appts = mockAppointments();
+  const slots = [];
+  let id = 200;
+
+  for (let day = 0; day <= 7; day++) {
+    const dt = new Date(now);
+    dt.setDate(dt.getDate() + day);
+    if (dt.getDay() === 0) continue;
+    const dateStr = dt.toISOString().split('T')[0];
+
+    for (let h = 9; h < 18; h++) {
+      for (const m of [0, 30]) {
+        const pad = n => String(n).padStart(2, '0');
+        const slotKey = `${dateStr}T${pad(h)}:${pad(m)}`;
+        const occupied = appts.find(a =>
+          a.slot_datetime.startsWith(slotKey) && a.status !== 'cancelled'
+        );
+        slots.push({
+          id: id++,
+          slot_datetime: `${dateStr}T${pad(h)}:${pad(m)}:00`,
+          is_available: !occupied,
+          client_name: occupied ? occupied.client_name : null,
+          appointment_status: occupied ? occupied.status : null,
+          service_name: occupied ? occupied.service_name : null
+        });
+      }
+    }
+  }
+  return slots;
+}
+
 app.get('/api/admin/dashboard', auth, (req, res) => {
-  const now = Date.now();
+  const appts = mockAppointments();
+  const today = new Date().toISOString().split('T')[0];
+  const todayAppts = appts.filter(a => a.slot_datetime.startsWith(today) && a.status !== 'cancelled');
+  const revenue = appts.filter(a => a.payment_status === 'paid').reduce((s, a) => s + a.signal_amount, 0);
+  const pending = appts.filter(a => a.payment_status === 'pending' && a.status !== 'cancelled');
+  const upcoming = appts
+    .filter(a => a.status !== 'cancelled' && a.status !== 'completed' && new Date(a.slot_datetime) > new Date())
+    .slice(0, 6);
   res.json({
-    today_appointments: 4,
-    total_revenue: 287.50,
-    pending_payments: 1,
-    upcoming_appointments: [
-      { id: 1001, client_name: 'João Silva',     client_phone: '(11) 91234-5678', status: 'confirmed', payment_status: 'paid',    signal_amount: 15.00, service_name: 'Corte de Cabelo', slot_datetime: new Date(now + 1 * 3600000).toISOString() },
-      { id: 1002, client_name: 'Pedro Santos',   client_phone: '(11) 99876-5432', status: 'pending',   payment_status: 'pending', signal_amount: 10.50, service_name: 'Barba',           slot_datetime: new Date(now + 3 * 3600000).toISOString() },
-      { id: 1003, client_name: 'Carlos Oliveira',client_phone: '(11) 95555-1234', status: 'confirmed', payment_status: 'paid',    signal_amount: 22.50, service_name: 'Corte + Barba',  slot_datetime: new Date(now + 5 * 3600000).toISOString() },
-    ],
+    today_appointments: todayAppts.length,
+    total_revenue: revenue,
+    pending_payments: pending.length,
+    upcoming_appointments: upcoming,
     weekly_data: []
   });
 });
 
 app.get('/api/admin/services', auth, (req, res) => res.json(SERVICES));
 app.post('/api/admin/services', auth, (req, res) => res.status(201).json({ ...req.body, id: 99, active: true }));
-app.patch('/api/admin/services/:id', auth, (req, res) => res.json({ ...req.body, id: parseInt(req.params.id) }));
+app.patch('/api/admin/services/:id', auth, (req, res) => {
+  const id = parseInt(req.params.id);
+  const svc = SERVICES.find(s => s.id === id) || {};
+  res.json({ ...svc, ...req.body, id });
+});
 
-app.get('/api/slots/all', auth, (req, res) => res.json([]));
-app.post('/api/slots', auth, (req, res) => res.status(201).json({ id: 99, ...req.body, is_available: true }));
-app.post('/api/slots/batch', auth, (req, res) => res.status(201).json({ created: 0, slots: [] }));
+app.get('/api/slots/all', auth, (req, res) => {
+  const { date } = req.query;
+  let slots = mockSlots();
+  if (date) slots = slots.filter(s => s.slot_datetime.startsWith(date));
+  res.json(slots);
+});
+app.post('/api/slots', auth, (req, res) => res.status(201).json({ id: 299, ...req.body, is_available: true }));
+app.post('/api/slots/batch', auth, (req, res) => {
+  const { slots } = req.body;
+  res.status(201).json({ created: slots ? slots.length : 0, slots: [] });
+});
 app.delete('/api/slots/:id', auth, (req, res) => res.json({ message: 'Horário removido' }));
 
-app.get('/api/appointments', auth, (req, res) => res.json([]));
-app.get('/api/appointments/:id', auth, (req, res) => res.status(404).json({ error: 'Não encontrado' }));
-app.patch('/api/appointments/:id/status', auth, (req, res) => res.json({ id: parseInt(req.params.id), ...req.body }));
+app.get('/api/appointments', auth, (req, res) => {
+  const { date, status } = req.query;
+  let appts = mockAppointments();
+  if (date) appts = appts.filter(a => a.slot_datetime.startsWith(date));
+  if (status) appts = appts.filter(a => a.status === status);
+  res.json(appts);
+});
+app.get('/api/appointments/:id', auth, (req, res) => {
+  const appt = mockAppointments().find(a => a.id === parseInt(req.params.id));
+  if (!appt) return res.status(404).json({ error: 'Não encontrado' });
+  res.json(appt);
+});
+app.patch('/api/appointments/:id/status', auth, (req, res) => {
+  res.json({ id: parseInt(req.params.id), ...req.body });
+});
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok', mode: 'demo' }));
 

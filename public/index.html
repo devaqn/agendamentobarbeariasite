@@ -12,16 +12,19 @@
 </head>
 <body>
 
+  <!-- Overlay do menu mobile -->
+  <div id="nav-overlay"></div>
+
   <!-- ── HEADER ── -->
   <header id="header">
     <a href="/" class="logo barbershop-name">✦ Barbearia Classic</a>
-    <nav>
+    <nav id="main-nav">
       <a href="#servicos">Serviços</a>
       <a href="#depoimentos">Avaliações</a>
       <a href="#sobre">Sobre</a>
       <a href="#agendar" class="btn-nav">Agendar Agora</a>
     </nav>
-    <button class="menu-toggle" id="menu-toggle" aria-label="Menu">
+    <button class="menu-toggle" id="menu-toggle" aria-label="Menu" aria-expanded="false">
       <span></span><span></span><span></span>
     </button>
   </header>
@@ -450,10 +453,37 @@
     });
 
     // Mobile menu
-    document.getElementById('menu-toggle').addEventListener('click', function() {
-      this.classList.toggle('open');
-      document.querySelector('nav').classList.toggle('open');
+    const menuToggle = document.getElementById('menu-toggle');
+    const mainNav    = document.getElementById('main-nav');
+    const navOverlay = document.getElementById('nav-overlay');
+
+    function openMenu() {
+      menuToggle.classList.add('open');
+      menuToggle.setAttribute('aria-expanded', 'true');
+      mainNav.classList.add('open');
+      navOverlay.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMenu() {
+      menuToggle.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+      mainNav.classList.remove('open');
+      navOverlay.classList.remove('show');
+      document.body.style.overflow = '';
+    }
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.contains('open') ? closeMenu() : openMenu();
     });
+
+    // Fechar ao clicar em link
+    mainNav.querySelectorAll('a').forEach(a => a.addEventListener('click', closeMenu));
+
+    // Fechar ao clicar no overlay
+    navOverlay.addEventListener('click', closeMenu);
+
+    // Fechar com ESC
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeMenu(); });
   </script>
 </body>
 </html>

@@ -1634,20 +1634,93 @@ tbody td { padding: 0.9rem 1rem; vertical-align: middle; }
 }
 
 /* ============================================
+   Overlay do menu mobile
+   ============================================ */
+#nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 97;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(4px);
+}
+#nav-overlay.show { display: block; }
+
+/* ============================================
    Responsive
    ============================================ */
 @media (max-width: 900px) {
   header { padding: 0 1.25rem; }
-  nav { display: none; position: fixed; inset: 0; top: 72px; background: rgba(8,8,8,0.98); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 2rem; z-index: 99; }
-  nav.open { display: flex; }
-  nav a { font-size: 1.1rem; }
-  .btn-nav { padding: 0.75rem 2rem; font-size: 1rem; }
-  .menu-toggle { display: flex; }
+
+  /* Menu drawer — slide + fade */
+  nav {
+    position: fixed;
+    top: 0; left: auto; right: 0; bottom: 0;
+    width: min(320px, 85vw);
+    background: var(--bg-2);
+    border-left: 1px solid var(--border);
+    backdrop-filter: blur(24px);
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    z-index: 98;
+    padding: 5rem 2rem 3rem;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(100%);
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+    box-shadow: -20px 0 60px rgba(0,0,0,0.5);
+  }
+  nav.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  /* Links com stagger */
+  nav a {
+    font-size: 1.15rem;
+    font-weight: 500;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid var(--border);
+    width: 100%;
+    color: var(--text-2);
+    opacity: 0;
+    transform: translateX(18px);
+    transition: color 0.2s, opacity 0.3s, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  nav.open a { opacity: 1; transform: translateX(0); }
+  nav.open a:nth-child(1) { transition-delay: 0.06s; }
+  nav.open a:nth-child(2) { transition-delay: 0.12s; }
+  nav.open a:nth-child(3) { transition-delay: 0.18s; }
+  nav.open a:nth-child(4) { transition-delay: 0.22s; }
+  nav a:hover { color: var(--gold); }
+
+  .btn-nav {
+    margin-top: 1.25rem;
+    padding: 0.85rem 1.5rem;
+    font-size: 0.95rem;
+    border-radius: 9px;
+    text-align: center;
+    border-bottom: none !important;
+    width: 100%;
+    opacity: 0;
+    transform: translateX(18px);
+    transition: color 0.2s, background 0.2s, opacity 0.3s, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  nav.open .btn-nav { opacity: 1; transform: translateX(0); transition-delay: 0.26s; }
+
+  .menu-toggle { display: flex; z-index: 200; }
+
   section { padding: 4rem 1.25rem; }
   .sobre-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .form-row { grid-template-columns: 1fr; }
   .stepper .step-label { display: none; }
   .booking-card { padding: 1.5rem; }
+  .service-options { grid-template-columns: 1fr 1fr; }
   .trust-bar { gap: 0; }
   .trust-item { padding: 0 0.75rem; }
   .hero-orb-1 { width: 280px; height: 280px; }
@@ -1661,8 +1734,20 @@ tbody td { padding: 0.9rem 1rem; vertical-align: middle; }
   #hero h1 { letter-spacing: -0.5px; }
   .trust-bar { display: none; }
   .footer-content { flex-direction: column; }
-  .sidebar { transform: translateX(-100%); transition: transform 0.3s; }
+  .service-options { grid-template-columns: 1fr; }
+  .booking-card { padding: 1.25rem; }
+  .summary-signal { flex-direction: column; gap: 0.5rem; align-items: flex-start; }
+  .signal-value { font-size: 1.5rem; }
+  .footer-content { gap: 1rem; }
+
+  /* Admin mobile */
+  .sidebar { transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1); }
   .sidebar.open { transform: translateX(0); }
   .sidebar-toggle { display: flex; align-items: center; justify-content: center; }
   .admin-main { margin-left: 0; padding: 1rem; padding-top: 4rem; }
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .stat-card-value { font-size: 1.6rem; }
+  .admin-title { font-size: 1.4rem; }
+  .upcoming-item { flex-wrap: wrap; gap: 0.75rem; }
+  .upcoming-time { min-width: auto; }
 }
