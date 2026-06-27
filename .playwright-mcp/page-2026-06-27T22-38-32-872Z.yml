@@ -1,0 +1,14 @@
+- generic [ref=e3]:
+  - generic [ref=e4]:
+    - generic [ref=e5]: ✦ Barbearia Classic
+    - paragraph [ref=e6]: Área administrativa
+  - generic [ref=e7]:
+    - generic [ref=e8]: E-mail
+    - textbox "admin@barbearia.com" [ref=e9]
+  - generic [ref=e10]:
+    - generic [ref=e11]: Senha
+    - textbox "••••••••" [ref=e12]
+  - button "Entrar" [ref=e13] [cursor=pointer]
+  - paragraph [ref=e14]:
+    - link "← Voltar ao site" [ref=e15] [cursor=pointer]:
+      - /url: /

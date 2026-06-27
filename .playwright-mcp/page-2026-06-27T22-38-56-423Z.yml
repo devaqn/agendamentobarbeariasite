@@ -1,0 +1,78 @@
+- generic [ref=e16]:
+  - complementary [ref=e17]:
+    - generic [ref=e18]:
+      - generic [ref=e19]: ✦ Barbearia Classic
+      - paragraph [ref=e20]: Painel Admin
+    - navigation [ref=e21]:
+      - button "📊 Dashboard" [ref=e22] [cursor=pointer]:
+        - generic [ref=e23]: 📊
+        - text: Dashboard
+      - button "📅 Agendamentos" [ref=e24] [cursor=pointer]:
+        - generic [ref=e25]: 📅
+        - text: Agendamentos
+      - button "🕐 Horários" [ref=e26] [cursor=pointer]:
+        - generic [ref=e27]: 🕐
+        - text: Horários
+      - button "✂️ Serviços & Preços" [ref=e28] [cursor=pointer]:
+        - generic [ref=e29]: ✂️
+        - text: Serviços & Preços
+    - generic [ref=e30]:
+      - generic [ref=e31]:
+        - generic [ref=e32]: A
+        - generic [ref=e33]:
+          - generic [ref=e34]: Admin Demo
+          - generic [ref=e35]: admin@barbearia.com
+      - button "Sair" [ref=e36] [cursor=pointer]
+  - main [ref=e37]:
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - heading "Dashboard" [level=1] [ref=e40]
+        - button "↻ Atualizar" [ref=e41] [cursor=pointer]
+      - generic [ref=e42]:
+        - generic [ref=e43]:
+          - generic [ref=e44]: Agendamentos hoje
+          - generic [ref=e45]: "5"
+          - generic [ref=e46]: confirmados + pendentes
+        - generic [ref=e47]:
+          - generic [ref=e48]: Receita em sinais
+          - generic [ref=e49]: R$ 150,00
+          - generic [ref=e50]: pagamentos confirmados
+        - generic [ref=e51]:
+          - generic [ref=e52]: Aguardando pagamento
+          - generic [ref=e53]: "3"
+          - generic [ref=e54]: sinais não pagos
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - generic [ref=e57]: Próximos agendamentos
+          - button "Ver todos →" [ref=e58] [cursor=pointer]
+        - generic [ref=e60]:
+          - generic [ref=e61]:
+            - generic [ref=e62]:
+              - generic [ref=e63]: 06:00
+              - generic [ref=e64]: 28/06
+            - generic [ref=e65]:
+              - generic [ref=e66]: Gabriel Lima
+              - generic [ref=e67]: Corte + Barba · (11) 95555-2222
+            - generic [ref=e68]:
+              - generic [ref=e69]: Pago
+              - button "Cancelar" [ref=e70] [cursor=pointer]
+          - generic [ref=e71]:
+            - generic [ref=e72]:
+              - generic [ref=e73]: 07:30
+              - generic [ref=e74]: 28/06
+            - generic [ref=e75]:
+              - generic [ref=e76]: Pedro Oliveira
+              - generic [ref=e77]: Corte de Cabelo · (11) 94444-1111
+            - generic [ref=e78]:
+              - generic [ref=e79]: Pago
+              - button "Cancelar" [ref=e80] [cursor=pointer]
+          - generic [ref=e81]:
+            - generic [ref=e82]:
+              - generic [ref=e83]: 11:00
+              - generic [ref=e84]: 29/06
+            - generic [ref=e85]:
+              - generic [ref=e86]: Diego Santos
+              - generic [ref=e87]: Barba · (11) 93333-9999
+            - generic [ref=e88]:
+              - generic [ref=e89]: Pendente
+              - button "Cancelar" [ref=e90] [cursor=pointer]
