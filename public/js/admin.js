@@ -112,13 +112,12 @@ function loadView(view) {
 }
 
 function switchTab(view, tab) {
-  document.querySelectorAll(`#view-${view} .admin-tab`).forEach((el, i) => {
-    const tabId = el.getAttribute('onclick').match(/'([^']+)'\)$/)?.[1];
-    el.classList.toggle('active', tabId === tab);
+  document.querySelectorAll(`#view-${view} .admin-tab`).forEach(el => {
+    const onclick = el.getAttribute('onclick') || '';
+    el.classList.toggle('active', onclick.includes(`'${tab}'`));
   });
   document.querySelectorAll(`#view-${view} .admin-tab-panel`).forEach(el => el.classList.remove('active'));
   document.getElementById(`${view}-tab-${tab}`)?.classList.add('active');
-
   if (view === 'slots' && tab === 'agenda') loadSlotsView();
 }
 

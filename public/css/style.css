@@ -85,13 +85,13 @@ header.scrolled {
   gap: 0.5rem;
 }
 
-nav {
+header nav {
   display: flex;
   align-items: center;
   gap: 2rem;
 }
 
-nav a {
+header nav a {
   color: rgba(242,242,242,0.7);
   text-decoration: none;
   font-size: 0.875rem;
@@ -99,7 +99,7 @@ nav a {
   letter-spacing: 0.3px;
   transition: color 0.2s;
 }
-nav a:hover { color: var(--text); }
+header nav a:hover { color: var(--text); }
 
 .btn-nav {
   background: var(--gold) !important;
@@ -1653,7 +1653,7 @@ tbody td { padding: 0.9rem 1rem; vertical-align: middle; }
   header { padding: 0 1.25rem; }
 
   /* Menu drawer — slide + fade */
-  nav {
+  #main-nav {
     position: fixed;
     top: 0; left: auto; right: 0; bottom: 0;
     width: min(320px, 85vw);
@@ -1673,7 +1673,7 @@ tbody td { padding: 0.9rem 1rem; vertical-align: middle; }
     pointer-events: none;
     box-shadow: -20px 0 60px rgba(0,0,0,0.5);
   }
-  nav.open {
+  #main-nav.open {
     opacity: 1;
     visibility: visible;
     transform: translateX(0);
@@ -1681,7 +1681,7 @@ tbody td { padding: 0.9rem 1rem; vertical-align: middle; }
   }
 
   /* Links com stagger */
-  nav a {
+  #main-nav a {
     font-size: 1.15rem;
     font-weight: 500;
     padding: 0.9rem 0;
@@ -1692,12 +1692,12 @@ tbody td { padding: 0.9rem 1rem; vertical-align: middle; }
     transform: translateX(18px);
     transition: color 0.2s, opacity 0.3s, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  nav.open a { opacity: 1; transform: translateX(0); }
-  nav.open a:nth-child(1) { transition-delay: 0.06s; }
-  nav.open a:nth-child(2) { transition-delay: 0.12s; }
-  nav.open a:nth-child(3) { transition-delay: 0.18s; }
-  nav.open a:nth-child(4) { transition-delay: 0.22s; }
-  nav a:hover { color: var(--gold); }
+  #main-nav.open a { opacity: 1; transform: translateX(0); }
+  #main-nav.open a:nth-child(1) { transition-delay: 0.06s; }
+  #main-nav.open a:nth-child(2) { transition-delay: 0.12s; }
+  #main-nav.open a:nth-child(3) { transition-delay: 0.18s; }
+  #main-nav.open a:nth-child(4) { transition-delay: 0.22s; }
+  #main-nav a:hover { color: var(--gold); }
 
   .btn-nav {
     margin-top: 1.25rem;
@@ -1711,7 +1711,7 @@ tbody td { padding: 0.9rem 1rem; vertical-align: middle; }
     transform: translateX(18px);
     transition: color 0.2s, background 0.2s, opacity 0.3s, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
   }
-  nav.open .btn-nav { opacity: 1; transform: translateX(0); transition-delay: 0.26s; }
+  #main-nav.open .btn-nav { opacity: 1; transform: translateX(0); transition-delay: 0.26s; }
 
   .menu-toggle { display: flex; z-index: 200; }
 
